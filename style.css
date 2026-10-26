@@ -1,0 +1,335 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #39ff14;
+    --dark-green: #073b0c;
+    --red: #ff1744;
+    --black: #020403;
+}
+
+body {
+    background: var(--black);
+    color: var(--green);
+    font-family: Consolas, "Courier New", monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#matrix {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.19;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 0, 0, 0.35) 4px
+    );
+}
+
+#flash {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    pointer-events: none;
+    background: rgba(255, 0, 0, 0);
+}
+
+.screen {
+    width: min(1200px, 95%);
+    min-height: 100vh;
+    margin: auto;
+    padding: 20px 0 12px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 13px 16px;
+    background: rgba(0, 18, 5, 0.88);
+    border: 1px solid #174d1b;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.12);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.red-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff1744;
+    box-shadow: 0 0 8px #ff1744;
+}
+
+.red-dot:nth-child(2) {
+    background: #ffb300;
+    box-shadow: 0 0 8px #ffb300;
+}
+
+.red-dot:nth-child(3) {
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+}
+
+.system-name {
+    margin-left: 10px;
+    color: #86ff79;
+}
+
+.status {
+    margin-left: auto;
+    color: var(--green);
+    animation: statusBlink 1.5s infinite;
+}
+
+.terminal {
+    margin-top: 18px;
+    min-height: 290px;
+    padding: 20px;
+    border: 1px solid #1d5b20;
+    background: rgba(0, 5, 1, 0.91);
+    box-shadow:
+        0 0 20px rgba(57, 255, 20, 0.08),
+        inset 0 0 30px rgba(0, 40, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #164519;
+    color: #5eaa5b;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+#output {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.old-line {
+    font-size: clamp(13px, 2vw, 18px);
+    color: #4f9a4d;
+    opacity: 0.75;
+    overflow-wrap: anywhere;
+}
+
+.typing-line {
+    font-size: clamp(22px, 4vw, 45px);
+    font-weight: bold;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+    text-shadow:
+        0 0 5px var(--green),
+        0 0 15px rgba(57, 255, 20, 0.65);
+    margin-top: 8px;
+    min-height: 65px;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 4px;
+    animation: cursorBlink 0.65s steps(2) infinite;
+}
+
+#glitchMessage {
+    min-height: 25px;
+    margin-top: 12px;
+    color: var(--red);
+    font-size: clamp(12px, 2vw, 17px);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.keyboard-area {
+    margin-top: 20px;
+    padding: 18px;
+    background: rgba(2, 8, 3, 0.96);
+    border: 1px solid #174d1b;
+    box-shadow:
+        0 0 25px rgba(57, 255, 20, 0.07),
+        inset 0 0 20px rgba(57, 255, 20, 0.025);
+}
+
+.keyboard-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.auto-status {
+    color: var(--green);
+    animation: statusBlink 0.9s infinite;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.key-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.key {
+    flex: 1;
+    min-width: 0;
+    height: clamp(34px, 5vw, 49px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #27562a;
+    border-bottom: 4px solid #143318;
+    border-radius: 5px;
+    background: linear-gradient(145deg, #101b11, #050a06);
+    color: #6d9c6b;
+    font-size: clamp(9px, 1.3vw, 14px);
+    box-shadow: 0 3px 0 #020402;
+    transition:
+        background 0.06s,
+        color 0.06s,
+        box-shadow 0.06s,
+        transform 0.06s;
+    user-select: none;
+}
+
+.key.wide {
+    flex: 1.5;
+    font-size: clamp(8px, 1.05vw, 11px);
+}
+
+.key.space {
+    flex: 5;
+}
+
+.key.active {
+    background: var(--green);
+    color: #001500;
+    border-color: #baffb1;
+    border-bottom-color: #168019;
+    box-shadow:
+        0 0 10px var(--green),
+        0 0 25px rgba(57, 255, 20, 0.65);
+    transform: translateY(3px);
+    font-weight: bold;
+}
+
+.key.corrupt {
+    background: var(--red);
+    color: white;
+    border-color: #ff8a9f;
+    box-shadow: 0 0 15px var(--red);
+}
+
+.keyboard-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #173c19;
+    color: #4f8250;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.danger-text {
+    color: var(--red);
+    animation: statusBlink 1s infinite;
+}
+
+footer {
+    margin-top: auto;
+    padding-top: 22px;
+    text-align: center;
+    font-size: 6px;
+    letter-spacing: 4px;
+    color: #102b12;
+    opacity: 0.25;
+}
+
+.shake {
+    animation: screenShake 0.15s linear 3;
+}
+
+@keyframes cursorBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+@keyframes statusBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+}
+
+@keyframes screenShake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(3px, -2px); }
+    50% { transform: translate(-3px, 2px); }
+    75% { transform: translate(2px, 1px); }
+    100% { transform: translate(0, 0); }
+}
+
+@media (max-width: 600px) {
+    .screen {
+        width: 97%;
+        padding-top: 8px;
+    }
+
+    .terminal {
+        padding: 12px;
+        min-height: 260px;
+    }
+
+    .keyboard-area {
+        padding: 10px 5px;
+    }
+
+    .key-row {
+        gap: 3px;
+    }
+
+    .key {
+        border-radius: 3px;
+        height: 33px;
+        border-bottom-width: 3px;
+    }
+
+    .keyboard-footer {
+        font-size: 8px;
+    }
+}

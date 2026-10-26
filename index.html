@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHOST PRINTER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <canvas id="matrix"></canvas>
+    <div id="flash"></div>
+
+    <main class="screen">
+
+        <div class="top-bar">
+            <span class="red-dot"></span>
+            <span class="red-dot"></span>
+            <span class="red-dot"></span>
+            <span class="system-name">UNKNOWN_PROCESS.exe</span>
+            <span class="status">● SYSTEM ACTIVE</span>
+        </div>
+
+        <section class="terminal">
+            <div class="terminal-header">
+                <span>GHOST TERMINAL</span>
+                <span id="clock">00:00:00</span>
+            </div>
+
+            <div id="output"></div>
+            <div class="typing-line">
+                <span id="currentText"></span><span class="cursor">_</span>
+            </div>
+
+            <div id="glitchMessage"></div>
+        </section>
+
+        <section class="keyboard-area">
+            <div class="keyboard-title">
+                <span>CONNECTED KEYBOARD</span>
+                <span class="auto-status">AUTO-TYPING: ON</span>
+            </div>
+
+            <div id="keyboard" class="keyboard">
+
+                <div class="key-row">
+                    <div class="key" data-key="ESC">ESC</div>
+                    <div class="key" data-key="1">1</div>
+                    <div class="key" data-key="2">2</div>
+                    <div class="key" data-key="3">3</div>
+                    <div class="key" data-key="4">4</div>
+                    <div class="key" data-key="5">5</div>
+                    <div class="key" data-key="6">6</div>
+                    <div class="key" data-key="7">7</div>
+                    <div class="key" data-key="8">8</div>
+                    <div class="key" data-key="9">9</div>
+                    <div class="key" data-key="0">0</div>
+                    <div class="key wide" data-key="BACKSPACE">⌫</div>
+                </div>
+
+                <div class="key-row">
+                    <div class="key wide" data-key="TAB">TAB</div>
+                    <div class="key" data-key="Q">Q</div>
+                    <div class="key" data-key="W">W</div>
+                    <div class="key" data-key="E">E</div>
+                    <div class="key" data-key="R">R</div>
+                    <div class="key" data-key="T">T</div>
+                    <div class="key" data-key="Y">Y</div>
+                    <div class="key" data-key="U">U</div>
+                    <div class="key" data-key="I">I</div>
+                    <div class="key" data-key="O">O</div>
+                    <div class="key" data-key="P">P</div>
+                </div>
+
+                <div class="key-row">
+                    <div class="key wide" data-key="CAPS">CAPS</div>
+                    <div class="key" data-key="A">A</div>
+                    <div class="key" data-key="S">S</div>
+                    <div class="key" data-key="D">D</div>
+                    <div class="key" data-key="F">F</div>
+                    <div class="key" data-key="G">G</div>
+                    <div class="key" data-key="H">H</div>
+                    <div class="key" data-key="J">J</div>
+                    <div class="key" data-key="K">K</div>
+                    <div class="key" data-key="L">L</div>
+                    <div class="key wide" data-key="ENTER">ENTER</div>
+                </div>
+
+                <div class="key-row">
+                    <div class="key wide" data-key="SHIFT">SHIFT</div>
+                    <div class="key" data-key="Z">Z</div>
+                    <div class="key" data-key="X">X</div>
+                    <div class="key" data-key="C">C</div>
+                    <div class="key" data-key="V">V</div>
+                    <div class="key" data-key="B">B</div>
+                    <div class="key" data-key="N">N</div>
+                    <div class="key" data-key="M">M</div>
+                    <div class="key" data-key=",">,</div>
+                    <div class="key" data-key=".">.</div>
+                    <div class="key wide" data-key="SHIFT2">SHIFT</div>
+                </div>
+
+                <div class="key-row">
+                    <div class="key wide" data-key="CTRL">CTRL</div>
+                    <div class="key wide" data-key="ALT">ALT</div>
+                    <div class="key space" data-key="SPACE"></div>
+                    <div class="key wide" data-key="ALT2">ALT</div>
+                    <div class="key wide" data-key="CTRL2">CTRL</div>
+                </div>
+
+            </div>
+
+            <div class="keyboard-footer">
+                <span>DEVICE: UNKNOWN</span>
+                <span>INPUT SOURCE: ???</span>
+                <span class="danger-text">DO NOT DISCONNECT</span>
+            </div>
+        </section>
+
+        <footer>
+            AKRAMJONOVA JADRA MARATOVNA
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
